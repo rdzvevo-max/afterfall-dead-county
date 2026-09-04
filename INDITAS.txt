@@ -1,0 +1,8 @@
+AFTERFALL: DEAD COUNTY – Godot 4
+
+1. Töltsd le a Godot 4.3 vagy újabb Standard verzióját: https://godotengine.org/download/windows/
+2. Csomagold ki ezt a ZIP-et.
+3. Indítsd el a Godotot, válaszd az Import lehetőséget, és tallózd be a project.godot fájlt.
+4. Nyomd meg az F6/F5 gombot vagy a jobb felső sarokban a lejátszás ikont.
+
+Windows EXE készítése: Project > Export > Add > Windows Desktop > Export Project.
