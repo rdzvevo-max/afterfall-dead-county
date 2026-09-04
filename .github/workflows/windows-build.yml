@@ -1,0 +1,46 @@
+name: Windows build
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  export-windows:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Forrás letöltése
+        uses: actions/checkout@v4
+
+      - name: Godot 4.3 és export template-ek
+        uses: chickensoft-games/setup-godot@v2
+        with:
+          version: 4.3.0
+          use-dotnet: false
+          include-templates: true
+
+      - name: Projekt import és GDScript ellenőrzés
+        run: godot --headless --editor --path . --quit-after 8
+
+      - name: Windows EXE elkészítése
+        run: |
+          mkdir -p build
+          godot --headless --path . --export-release "Windows Desktop" build/AfterfallDeadCounty.exe
+          test -s build/AfterfallDeadCounty.exe
+
+      - name: Build ZIP csomagolása
+        run: |
+          cd build
+          zip -9 AFTERFALL_DeadCounty_Windows.zip AfterfallDeadCounty.exe
+
+      - name: Letölthető build feltöltése
+        uses: actions/upload-artifact@v4
+        with:
+          name: AFTERFALL-Dead-County-Windows
+          path: build/AFTERFALL_DeadCounty_Windows.zip
+          if-no-files-found: error
+          retention-days: 30
